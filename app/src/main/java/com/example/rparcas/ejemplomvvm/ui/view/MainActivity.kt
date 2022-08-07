@@ -7,7 +7,9 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.example.rparcas.ejemplomvvm.databinding.ActivityMainBinding
 import com.example.rparcas.ejemplomvvm.ui.viewmodel.QuoteViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint // PREPARAR LA CLASE PARA QUE PUEDA INYECTAR
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityMainBinding

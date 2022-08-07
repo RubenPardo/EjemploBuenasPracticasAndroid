@@ -2,10 +2,11 @@ package com.example.rparcas.ejemplomvvm.domain
 
 import com.example.rparcas.ejemplomvvm.data.QuoteRepository
 import com.example.rparcas.ejemplomvvm.data.model.QuoteModel
+import javax.inject.Inject
 
-class GetQuotesUseCase {
+class GetQuotesUseCase @Inject constructor(private val repository:QuoteRepository)/*Preparar para poder inyectarse*/{
 
-    private val repository = QuoteRepository()
+    //private val repository = QuoteRepository() Quitar todas las instancias de objetos pasarlo a el constructor del inject
 
 
     /*

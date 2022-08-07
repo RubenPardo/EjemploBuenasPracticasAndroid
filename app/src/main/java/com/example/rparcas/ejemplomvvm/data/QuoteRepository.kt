@@ -3,6 +3,7 @@ package com.example.rparcas.ejemplomvvm.data
 import com.example.rparcas.ejemplomvvm.data.model.QuoteModel
 import com.example.rparcas.ejemplomvvm.data.model.QuoteProvider
 import com.example.rparcas.ejemplomvvm.data.network.QuoteService
+import javax.inject.Inject
 
 /**
  * Repositorio para el modelo de quotes
@@ -11,15 +12,17 @@ import com.example.rparcas.ejemplomvvm.data.network.QuoteService
  * forma de acceso a los datos apunta
  *
  */
-class QuoteRepository {
+class QuoteRepository @Inject constructor(
+    private val api:QuoteService,
+    private val quoteProvider: QuoteProvider) {
 
-    private val api = QuoteService()
+    //private val api = QuoteService() Quitar todas las instancias de objetos pasarlo a el constructor del inject
 
     suspend fun getAllQuotes():List<QuoteModel>{
         val response:List<QuoteModel> = api.getQuotes()
 
         // lo guardamos en memoria
-        QuoteProvider.quotes = response
+        quoteProvider.quotes = response
 
         return response
     }

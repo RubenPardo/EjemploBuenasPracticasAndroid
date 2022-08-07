@@ -7,7 +7,9 @@ import com.example.rparcas.ejemplomvvm.data.model.QuoteModel
 import com.example.rparcas.ejemplomvvm.data.model.QuoteProvider
 import com.example.rparcas.ejemplomvvm.domain.GetQuotesUseCase
 import com.example.rparcas.ejemplomvvm.domain.GetRandomQuoteUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Clase que vincula la vista con el modelo mediante los
@@ -18,13 +20,19 @@ import kotlinx.coroutines.launch
  * desde la vista se pueden suscribir para que de esta forma
  * se les avise cuando algo cambie y se repinte
  */
-class QuoteViewModel : ViewModel(){
+@HiltViewModel// preparar para que le puedan inyectar objetos
+class QuoteViewModel @Inject constructor(
+    private val getQuotesUseCase:GetQuotesUseCase,
+    private val getRandomQuoteUseCase:GetRandomQuoteUseCase
+) : ViewModel(){
 
     val quoteModel = MutableLiveData<QuoteModel>()
     val isLoading = MutableLiveData<Boolean>()
 
-    var getQuotesUseCase = GetQuotesUseCase()
-    var getRandomQuoteUseCase = GetRandomQuoteUseCase()
+    // EN VEZ DE PONERLAS DIRECTAMENTE LAS INYECTAMOS PARA PODER REALIZAR MEJOR
+    // LOS TESTS Y AHORRAR DEPENDENCIAS DIRECTAS
+    /*var getQuotesUseCase = GetQuotesUseCase()
+    var getRandomQuoteUseCase = GetRandomQuoteUseCase()*/
 
     fun onCreate() {
         // controlador de corrutinas

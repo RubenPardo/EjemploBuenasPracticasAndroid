@@ -5,13 +5,16 @@ import com.example.rparcas.ejemplomvvm.data.model.QuoteModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import javax.inject.Inject
 
 /**
  * Implementacion de las peticiones de quote con retrofit
  */
-class QuoteService {
+class QuoteService @Inject constructor(private val api:QuoteApiClient) {
 
-    private val retrofit = RetrofitHelper.getRetrogit()
+    // En vez de poner aqui el retrofit, injectamos el QuoteApiCliente
+    // que en la clase NetworkModule proveemos creando ya retrofit
+    //private val retrofit = RetrofitHelper.getRetrofit() // RETROFIT
 
     suspend fun getQuotes():List<QuoteModel>{
 
@@ -24,8 +27,7 @@ class QuoteService {
 
         // Forma correcta de hacerlo, lanzarlo en un hilo separado
         return withContext(Dispatchers.IO){
-            val response: Response<List<QuoteModel>> =
-                retrofit.create(QuoteApiClient::class.java).getAllQuotes()
+            val response: Response<List<QuoteModel>> = api.getAllQuotes()
 
             // si es null devuelve lista vacia
             response.body() ?: emptyList()
