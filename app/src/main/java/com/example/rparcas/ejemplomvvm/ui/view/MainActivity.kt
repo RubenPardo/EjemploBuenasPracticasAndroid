@@ -1,11 +1,12 @@
-package com.example.rparcas.ejemplomvvm.view
+package com.example.rparcas.ejemplomvvm.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.example.rparcas.ejemplomvvm.databinding.ActivityMainBinding
-import com.example.rparcas.ejemplomvvm.viewmodel.QuoteViewModel
+import com.example.rparcas.ejemplomvvm.ui.viewmodel.QuoteViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        quoteViewModel.onCreate()
+
         // nos subscribimos al live data
         quoteViewModel.quoteModel.observe(this, Observer { currentQuote ->
 
@@ -28,6 +31,10 @@ class MainActivity : AppCompatActivity() {
             binding.tvQuote.text = currentQuote.quote
             binding.tvAuthor.text = currentQuote.author
 
+        })
+
+        quoteViewModel.isLoading.observe(this, Observer {
+            binding.progress.isVisible = it
         })
 
         // ponemos el listener de la vista
