@@ -1,6 +1,7 @@
 # EjemploMVVM
 
 Aplicación de ejemplo para mostrar el uso de la arquitectura MVVM y Clean
+También se hace uso de Retrofit2 y Inyeccion de dependencias con Dagger Hilt
 
 ## Dependencias y configuración
 
