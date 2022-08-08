@@ -6,6 +6,8 @@ También se hace uso de Retrofit2 y Inyeccion de dependencias con [Dagger Hilt](
 
 Se hace uso de [ROOM](#explicacion-de-room)
 
+Tests unitarios con mockk de los casos de uso y los view model
+
 ## Dependencias y configuración
 
 1. Activar el view binding
@@ -37,6 +39,9 @@ implementation "com.squareup.retrofit2:retrofit:2.9.0"
 implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 //Corrutinas
 implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+
+// mock
+testImplementation 'io.mockk:mockk:1.12.2'
 
 ```
 
