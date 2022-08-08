@@ -3,10 +3,9 @@ package com.example.rparcas.ejemplomvvm.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rparcas.ejemplomvvm.data.model.QuoteModel
-import com.example.rparcas.ejemplomvvm.data.model.QuoteProvider
 import com.example.rparcas.ejemplomvvm.domain.GetQuotesUseCase
 import com.example.rparcas.ejemplomvvm.domain.GetRandomQuoteUseCase
+import com.example.rparcas.ejemplomvvm.domain.Quote
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +25,7 @@ class QuoteViewModel @Inject constructor(
     private val getRandomQuoteUseCase:GetRandomQuoteUseCase
 ) : ViewModel(){
 
-    val quoteModel = MutableLiveData<QuoteModel>()
+    val quoteModel = MutableLiveData<Quote>()
     val isLoading = MutableLiveData<Boolean>()
 
     // EN VEZ DE PONERLAS DIRECTAMENTE LAS INYECTAMOS PARA PODER REALIZAR MEJOR
@@ -52,14 +51,17 @@ class QuoteViewModel @Inject constructor(
     }
 
     fun randomQuote(){
-        isLoading.postValue(true)
+        viewModelScope.launch {
+            isLoading.postValue(true)
 
 
-        val quote = getRandomQuoteUseCase()
-        if(quote!=null){
-            quoteModel.postValue(quote)
+            val quote = getRandomQuoteUseCase()
+            if(quote!=null){
+                // es un bugg, porque quiero un no nulo pero ya comprobamos que no sea nulo
+                quoteModel.postValue(quote)
+            }
+            isLoading.postValue(false)
         }
-        isLoading.postValue(false)
     }
 
 

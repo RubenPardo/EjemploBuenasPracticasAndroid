@@ -1,6 +1,7 @@
 package com.example.rparcas.ejemplomvvm.domain
 
 import com.example.rparcas.ejemplomvvm.data.QuoteRepository
+import com.example.rparcas.ejemplomvvm.data.database.entities.toDatabase
 import com.example.rparcas.ejemplomvvm.data.model.QuoteModel
 import javax.inject.Inject
 
@@ -28,8 +29,21 @@ class GetQuotesUseCase @Inject constructor(private val repository:QuoteRepositor
      *
      *
      */
-    suspend operator fun invoke():List<QuoteModel>?{
-        return repository.getAllQuotes()
+    suspend operator fun invoke():List<Quote>?{
+        val quotes = repository.getAllQuotesFromApi()
+
+        if(quotes.isNotEmpty()){
+            // guardarlo en la bd y devolver las quotes obtenidas
+            // borramos las anteriores para que no haya duplicados
+            repository.clearQuotes()
+            repository.insertQuotes(quotes.map { it.toDatabase() })
+            return quotes
+        }else{
+            // si en algun casual la peticion falla obtener
+                // una version guardada en local
+            return repository.getAllQuotesFromDatabase()
+        }
+
     }
 
 }
