@@ -1,7 +1,10 @@
-# EjemploMVVM
+# Proyecto buenas practicas Android
 
 Aplicación de ejemplo para mostrar el uso de la arquitectura MVVM y Clean
+
 También se hace uso de Retrofit2 y Inyeccion de dependencias con [Dagger Hilt](#explicacion-de-dagger-hilt)
+
+Se hace uso de [ROOM](#explicacion-de-room)
 
 ## Dependencias y configuración
 
@@ -33,18 +36,18 @@ implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
 implementation "com.squareup.retrofit2:retrofit:2.9.0"
 implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 //Corrutinas
-implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.6'
+implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 
 ```
 
 Para añadir Dagger Hilt para la inyección de dependencias, el apartado buildscript del gradle del proyecto debe quedar:
 ```
 buildscript {
-    ext.kotlin_version = "1.3.72"
+    ext.kotlin_version = "1.6.10"
     ext.hilt_version = '2.35' // añadir---------------------------
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.3"
@@ -66,13 +69,20 @@ implementation "com.google.dagger:hilt-android:$hilt_version"
 kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 ```
 
+Añadir Room
+```
+ //Room
+    implementation "androidx.room:room-ktx:2.4.0"
+    kapt "androidx.room:room-compiler:2.4.0"
+```
+
 ## Estructura del proyecto
 
 ### Core
 Directorio donde estan las clases ajenas del poryecto, por ejemplo el RetrofitHelper
 
 ### Data
-Directorio del modelo de la aplicacion junto a los repostiroios y accesos a la api
+Directorio del modelo de la aplicacion junto a los repostiroios, accesos a la api y a la BD interna con ROOM
 
 ### Domain
 Logica de negocio de la aplicación, es decir, casos de uso
@@ -86,4 +96,13 @@ Es un patrón de diseño orientado a objetos, en el que se suministran objetos a
 En otras palabras, se trata de un patrón de diseño que se encarga de extraer la responsabilidad de la creación de instancias de un componente para delegarla en otro
 
 [Explicación técnia](https://developer.android.com/training/dependency-injection?hl=es-419)
+
 [Video explicativo](https://www.youtube.com/watch?v=t6ZuzSu2UHI&list=PL8ie04dqq7_OcBYDpvHrcSFVoggLi3cm_&index=36)
+
+## Explicacion de ROOM
+ROOM es una libreria ORM (Object Relational Mapping) de base datos que simplifica todo el trabajo con ella
+
+[Explicación técnica](https://devexperto.com/room-la-libreria-de-base-de-datos-de-android/#:~:text=Room%20es%20una%20librería%20de,datos%20lista%20para%20ser%20usada.)
+
+[Video explicativo](https://www.youtube.com/watch?v=lYBb4QedYH8&list=PL8ie04dqq7_OcBYDpvHrcSFVoggLi3cm_&index=43)
+
