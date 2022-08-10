@@ -38,10 +38,12 @@ implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
 implementation "com.squareup.retrofit2:retrofit:2.9.0"
 implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 //Corrutinas
-implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"// testear corrutinas
 
 // mock
 testImplementation 'io.mockk:mockk:1.12.2'
+testImplementation "androidx.arch.core:core-testing:2.1.0"// testear live data
 
 ```
 
